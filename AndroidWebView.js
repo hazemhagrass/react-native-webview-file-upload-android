@@ -212,6 +212,10 @@ class AndroidWebView extends Component {
      * @platform android
      */
     allowUniversalAccessFromFileURLs: PropTypes.bool,
+
+    saveFormDataDisabled: PropTypes.bool,
+    thirdPartyCookiesEnabled: PropTypes.bool,
+    mixedContentMode: PropTypes.string
   };
 
   static defaultProps = {

@@ -8,8 +8,11 @@ import android.webkit.JsPromptResult;
 import android.webkit.JsResult;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
+import android.webkit.WebViewClient;
 import android.webkit.WebView;
 
+import android.webkit.SslErrorHandler;
+import android.net.http.SslError;
 
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.ThemedReactContext;
@@ -30,11 +33,9 @@ public class AndroidWebViewManager extends ReactWebViewManager {
         //Now do our own setWebChromeClient, patching in file chooser support
         final AndroidWebViewModule module = this.aPackage.getModule();
         view.setWebChromeClient(new WebChromeClient(){
-
             public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType) {
                 module.setUploadMessage(uploadMsg);
                 openFileChooserView();
-
             }
 
             public boolean onJsConfirm (WebView view, String url, String message, JsResult result){
@@ -77,6 +78,13 @@ public class AndroidWebViewManager extends ReactWebViewManager {
                 }
             }
         });
+
+       view.setWebViewClient(new WebViewClient() {
+           @Override
+           public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error){
+               handler.proceed();
+           }
+       });
         return view;
     }
 

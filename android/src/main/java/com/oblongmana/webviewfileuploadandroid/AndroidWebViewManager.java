@@ -29,6 +29,7 @@ public class AndroidWebViewManager extends ReactWebViewManager {
 
     @Override
     protected WebView createViewInstance(ThemedReactContext reactContext) {
+        Log.d("AndroidWebView", "Creating Webview Instance");
         WebView view = super.createViewInstance(reactContext);
         //Now do our own setWebChromeClient, patching in file chooser support
         final AndroidWebViewModule module = this.aPackage.getModule();
@@ -82,6 +83,7 @@ public class AndroidWebViewManager extends ReactWebViewManager {
        view.setWebViewClient(new WebViewClient() {
            @Override
            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error){
+               Log.e("AndroidWebView", "SSL Error");
                handler.proceed();
            }
        });
